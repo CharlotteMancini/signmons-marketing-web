@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Typography from '@mui/material/Typography';
 import { badges, motion as motionTokens } from '../../design/tokens';
 
 const toSeconds = (msValue: string) => Number(msValue.replace('ms', '')) / 1000;
@@ -32,6 +33,8 @@ const itemVariants = {
     },
   },
 };
+
+const MotionTypography = motion(Typography);
 
 const steps = [
   {
@@ -68,12 +71,17 @@ const HowItWorks = () => {
   return (
     <section id="how-it-works" className="section-panel">
       <motion.div variants={containerVariants} initial="hidden" animate="show">
-        <motion.h2 variants={itemVariants} className="section-title">
+        <MotionTypography variants={itemVariants} className="section-title" variant="h2">
           How It Works
-        </motion.h2>
-        <motion.div variants={itemVariants} className="section-lead">
+        </MotionTypography>
+        <MotionTypography
+          variants={itemVariants}
+          className="section-lead"
+          variant="body1"
+          component="p"
+        >
           A controlled intake sequence that never guesses.
-        </motion.div>
+        </MotionTypography>
       </motion.div>
 
       <motion.div

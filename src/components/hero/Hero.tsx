@@ -56,38 +56,13 @@ const Hero = () => {
         className="hero__content"
       >
         <motion.h1 variants={itemVariants} className="hero__title">
-          Your AI Dispatcher
+          AI Dispatcher
           <span className="hero__title-break">for the Trades</span>
         </motion.h1>
 
-        <motion.div variants={itemVariants} className="hero__subtitle">
+        <motion.p variants={itemVariants} className="hero__subtitle">
           Always On. <span className="hero__subtitle-accent">Always Booking.</span>
-        </motion.div>
-
-        <motion.div variants={itemVariants} className="hero__card">
-          <ul className="hero__list">
-            <li>
-              <span className="hero__check">✓</span>
-              Answers Calls
-            </li>
-            <li>
-              <span className="hero__check">✓</span>
-              Gathers Customer Info
-            </li>
-            <li>
-              <span className="hero__check">✓</span>
-              Processes Payments
-            </li>
-            <li>
-              <span className="hero__check">✓</span>
-              Books Jobs
-            </li>
-            <li>
-              <span className="hero__check">✓</span>
-              Sends Appt To Tech
-            </li>
-          </ul>
-        </motion.div>
+        </motion.p>
 
       </motion.div>
     </section>

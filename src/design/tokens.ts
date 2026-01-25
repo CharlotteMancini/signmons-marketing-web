@@ -30,9 +30,23 @@ export const colors = {
 
 export const typography = {
   fontFamily: '"Space Grotesk", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
-  hero: { fontSize: '3.5rem', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1 },
-  lead: { fontSize: '1.35rem', fontWeight: 500, letterSpacing: '-0.01em', lineHeight: 1.5 },
-  sectionTitle: { fontSize: '2.25rem', fontWeight: 800, letterSpacing: '-0.02em' },
+  hero: {
+    fontSize: 'clamp(2.25rem, 5vw, 3.25rem)',
+    fontWeight: 700,
+    letterSpacing: '-0.015em',
+    lineHeight: 1.2,
+  },
+  lead: {
+    fontSize: 'clamp(1.05rem, 2.5vw, 1.25rem)',
+    fontWeight: 500,
+    letterSpacing: '-0.005em',
+    lineHeight: 1.55,
+  },
+  sectionTitle: {
+    fontSize: 'clamp(1.75rem, 3vw, 2.25rem)',
+    fontWeight: 700,
+    letterSpacing: '-0.01em',
+  },
   body: { fontSize: '1rem', fontWeight: 400, lineHeight: 1.7 },
   caption: { fontSize: '0.9rem', fontWeight: 500, lineHeight: 1.6 },
   cta: { fontSize: '1rem', fontWeight: 700, letterSpacing: '0.01em' },

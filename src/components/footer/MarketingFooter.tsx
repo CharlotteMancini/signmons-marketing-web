@@ -1,9 +1,16 @@
+import Button from '@mui/material/Button';
+
 const MarketingFooter = () => {
   return (
     <div className="marketing-footer">
-      <a href="#how-it-works" className="hero__primary-cta">
+      <Button
+        className="hero__primary-cta"
+        component="a"
+        href="#how-it-works"
+        disableRipple
+      >
         Book More Jobs
-      </a>
+      </Button>
     </div>
   );
 };
