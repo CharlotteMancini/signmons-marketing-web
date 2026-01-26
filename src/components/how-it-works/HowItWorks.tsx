@@ -55,7 +55,7 @@ const steps = [
   {
     title: 'Job Created',
     description: 'Confirmed, paid, and ready for dispatch.',
-    guardrail: 'FSM approves every step.',
+    guardrail: 'No wasted trips.',
   },
 ];
 

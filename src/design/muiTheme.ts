@@ -54,6 +54,7 @@ export const muiTheme = createTheme({
       fontSize: typography.sectionTitle.fontSize,
       fontWeight: typography.sectionTitle.fontWeight,
       letterSpacing: typography.sectionTitle.letterSpacing,
+      lineHeight: typography.sectionTitle.lineHeight,
     },
     subtitle1: {
       fontSize: typography.lead.fontSize,

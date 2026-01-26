@@ -46,6 +46,7 @@ export const typography = {
     fontSize: 'clamp(1.75rem, 3vw, 2.25rem)',
     fontWeight: 700,
     letterSpacing: '-0.01em',
+    lineHeight: 1.25,
   },
   body: { fontSize: '1rem', fontWeight: 400, lineHeight: 1.7 },
   caption: { fontSize: '0.9rem', fontWeight: 500, lineHeight: 1.6 },
