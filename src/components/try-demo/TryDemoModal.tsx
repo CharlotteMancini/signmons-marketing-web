@@ -17,7 +17,6 @@ type TryDemoModalProps = {
 const TRY_DEMO_ENDPOINT = 'https://f2c1c2d7f64e.ngrok-free.app/api/marketing/try-demo';
 const CONSENT_TEXT_VERSION = 'try-demo-v1';
 const DEMO_SCENARIO = 'hvac';
-const CALL_MODE = 'immediate';
 
 const getTimeZone = () =>
   Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/New_York';
@@ -96,7 +95,7 @@ const TryDemoModal = ({ open, onClose }: TryDemoModalProps) => {
       consentToAutoCall: true,
       consentTextVersion: CONSENT_TEXT_VERSION,
       demoScenario: DEMO_SCENARIO,
-      callMode: CALL_MODE,
+      callMode: 'immediate',
       timezone: getTimeZone(),
     };
 

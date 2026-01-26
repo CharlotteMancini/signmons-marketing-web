@@ -55,7 +55,7 @@ This prevents:
 Do not build components yet — tokens first.
 
 ## 4) URL & IA Lock (Prevents SEO Churn)
-Before coding, lock the top-level routes exactly as written in `MARKETING_SITE.md`.
+Before coding, lock the top-level routes exactly as written in `docs/MARKETING_SITE.md`.
 
 Example:
 ```
@@ -78,6 +78,9 @@ Rules:
 
 Changing URLs later costs trust and SEO.
 
+MVP clarification:
+- Single-page marketing experience is acceptable for v1 if documented in `MARKETING_SITE.md`.
+
 ## 5) CTA Contract (Extremely Important)
 Decide now what CTAs do technically.
 
@@ -92,6 +95,10 @@ Explicitly not allowed:
 - “Try it now” unless it is a demo sandbox
 
 Marketing must never surprise users.
+
+MVP CTA contract (locked):
+- “Try Demo” → opens demo-call modal and posts to `/api/marketing/try-demo` (marketing-only endpoint).
+- “Join Early Access” → email-only modal (no backend required yet).
 
 ## 6) Analytics Guardrails (Before You Add Any)
 Define this upfront.
@@ -109,6 +116,9 @@ Not allowed:
 - Identity correlation
 
 Document this once and enforce it.
+
+MVP implementation note:
+- Only console intent logs (no vendors, no cookies, no storage).
 
 ## 7) Final Sanity Check (Green Light Criteria)
 You are ready to build when:

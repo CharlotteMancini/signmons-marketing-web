@@ -1,73 +1,69 @@
-# React + TypeScript + Vite
+# Signmons Marketing
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Marketing site for **Signmons** — an AI dispatcher for the trades.
 
-Currently, two official plugins are available:
+This repository contains a **static marketing experience** and a **live demo trigger**, not the SaaS application.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## What This Repo Is
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Public-facing marketing site
+- Live AI demo call trigger ("Try Demo")
+- Early Access interest capture
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## What This Repo Is Not
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Not the SaaS runtime
+- No authentication
+- No user accounts
+- No analytics vendors
+- No product data access
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Vite + React
+- MUI with shared design tokens
+- Framer Motion (subtle motion only)
+- Netlify hosting
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Key Documentation
+
+- `docs/MARKETING_PREFLIGHT.md` — guardrails & constraints
+- `docs/MARKETING_SITE.md` — IA, routing, CTA mechanics
+- `docs/TRY_DEMO_CONTRACT.md` — demo call API
+- `docs/SECURITY.md` — security posture
+- `docs/TASKS.md` — execution record
+
+---
+
+## Demo Behavior
+
+**Try Demo**
+- Triggers an outbound AI call
+- No redirect
+- Marketing-only endpoint
+
+**Early Access**
+- Email-only
+- No backend dependency yet
+
+---
+
+## Deployment
+
+- Static hosting
+- CSP (Report-Only → Enforced)
+- No runtime secrets in repo
+
+---
+
+## License / Usage
+
+Internal use unless otherwise specified.

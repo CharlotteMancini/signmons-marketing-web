@@ -59,6 +59,22 @@ Sections
   - "Book a demo"
   - "Join the waitlist"
 
+## URL & IA Lock (MVP)
+For v1, this repo ships as a single-page marketing site at `/`.
+Future routes listed below are aspirational and will be created only after v1 validation:
+- /how-it-works
+- /ai-csr
+- /for-trades/hvac
+- /for-trades/plumbing
+- /trust
+- /demo
+- /pricing (optional)
+- /about
+
+## CTA Mechanics (MVP)
+- Primary CTA: “Try Demo” → opens modal, posts to `/api/marketing/try-demo`.
+- Secondary CTA: “Join Early Access” → email-only modal (no backend yet).
+
 ### 2) Product / How It Works Page
 Goal: Explain how without exposing internals.
 
