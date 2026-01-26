@@ -36,22 +36,33 @@ const itemVariants = {
 
 const MotionTypography = motion(Typography);
 
-const pillars = [
+const assurances = [
+  'Audit trail for every turn and confirmation.',
+  'Tenant isolation enforced on every read/write/inference.',
+  'Fail-closed on missing or ambiguous data.',
+  'SMS is canonical for name, address, and payment.',
+];
+
+const sloTargets = [
   {
-    title: 'No guessing. Ever.',
-    subline: 'Every detail confirmed before dispatch.',
+    label: 'Avg. voice turns per call',
+    value: '≤ 8',
   },
   {
-    title: 'No unpaid jobs.',
-    subline: 'Payment secured up front.',
+    label: 'Voice → SMS handoff rate',
+    value: '≥ 80%',
   },
   {
-    title: 'Dispatcher sanity preserved.',
-    subline: 'Only confirmed data reaches the board.',
+    label: 'SMS confirmation completion',
+    value: '≥ 85%',
   },
   {
-    title: 'Full audit trail.',
-    subline: 'Every decision logged and reviewable.',
+    label: 'Jobs with unconfirmed name/address',
+    value: '0',
+  },
+  {
+    label: 'p95 voice response latency',
+    value: '< 1.2s',
   },
 ];
 
@@ -60,7 +71,7 @@ const WhyOwnersTrust = () => {
     <section id="why-owners-trust" className="trust-section">
       <motion.div variants={containerVariants} initial="hidden" animate="show">
         <MotionTypography variants={itemVariants} className="section-title" variant="h2">
-          Chat
+          Trust, Safety &amp; Compliance
         </MotionTypography>
       </motion.div>
 
@@ -68,19 +79,34 @@ const WhyOwnersTrust = () => {
         variants={containerVariants}
         initial="hidden"
         animate="show"
-        className="trust-grid"
+        className="trust-panels"
       >
-        {pillars.map((pillar) => (
-          <motion.div key={pillar.title} variants={itemVariants} className="trust-card">
-            <div aria-hidden="true" className="trust-icon" />
-            <div className="step-title">
-              {pillar.title}
-            </div>
-            <div className="step-description">
-              {pillar.subline}
-            </div>
-          </motion.div>
-        ))}
+        <motion.div variants={itemVariants} className="trust-card">
+          <div aria-hidden="true" className="trust-icon" />
+          <MotionTypography variant="subtitle1" className="trust-card__title">
+            Integrity Guarantees
+          </MotionTypography>
+          <ul className="trust-list">
+            {assurances.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </motion.div>
+
+        <motion.div variants={itemVariants} className="trust-card">
+          <div aria-hidden="true" className="trust-icon trust-icon--metrics" />
+          <MotionTypography variant="subtitle1" className="trust-card__title">
+            SLO Targets (MVP)
+          </MotionTypography>
+          <ul className="trust-metrics">
+            {sloTargets.map((metric) => (
+              <li key={metric.label}>
+                <span className="trust-metrics__label">{metric.label}</span>
+                <span className="trust-metrics__value">{metric.value}</span>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
       </motion.div>
     </section>
   );

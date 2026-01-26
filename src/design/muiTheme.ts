@@ -4,21 +4,41 @@ import { colors, typography, spacing, radii } from './tokens';
 export const muiTheme = createTheme({
   palette: {
     mode: 'dark',
+    common: {
+      white: colors.neutral.white,
+    },
     primary: {
       main: colors.brand.primary,
     },
     secondary: {
+      main: colors.brand.secondary,
+    },
+    info: {
       main: colors.brand.accent,
+    },
+    error: {
+      main: colors.brand.highlight,
+    },
+    success: {
+      main: colors.state.confirmed,
+    },
+    warning: {
+      main: colors.state.candidate,
     },
     text: {
       primary: colors.text.primary,
       secondary: colors.text.secondary,
+      disabled: colors.text.muted,
     },
     background: {
       default: colors.bg.page,
       paper: colors.bg.card,
+      surface: colors.bg.surface,
     },
     divider: colors.border.subtle,
+    action: {
+      disabled: colors.state.disabled,
+    },
   },
 
   typography: {
@@ -35,29 +55,44 @@ export const muiTheme = createTheme({
       fontWeight: typography.sectionTitle.fontWeight,
       letterSpacing: typography.sectionTitle.letterSpacing,
     },
+    subtitle1: {
+      fontSize: typography.lead.fontSize,
+      fontWeight: typography.lead.fontWeight,
+      letterSpacing: typography.lead.letterSpacing,
+      lineHeight: typography.lead.lineHeight,
+    },
     body1: {
       fontSize: typography.body.fontSize,
       fontWeight: typography.body.fontWeight,
       lineHeight: typography.body.lineHeight,
     },
+    body2: {
+      fontSize: typography.caption.fontSize,
+      fontWeight: typography.caption.fontWeight,
+      lineHeight: typography.caption.lineHeight,
+    },
     caption: {
       fontSize: typography.caption.fontSize,
       fontWeight: typography.caption.fontWeight,
+      lineHeight: typography.caption.lineHeight,
     },
     button: {
       fontSize: typography.cta.fontSize,
       fontWeight: typography.cta.fontWeight,
       letterSpacing: typography.cta.letterSpacing,
       textTransform: 'none',
+      lineHeight: 1.2,
     },
   },
 
   shape: {
     borderRadius: parseInt(radii.md, 10),
+    radii,
   },
 
   spacing: (factor: number) => {
     const map = [
+      '0px',
       spacing.xxs,
       spacing.xs,
       spacing.sm,
@@ -69,7 +104,8 @@ export const muiTheme = createTheme({
       spacing['4xl'],
       spacing['5xl'],
     ];
-    return map[factor] ?? spacing.md;
+    if (factor < 0) return '0px';
+    return map[factor] ?? map[map.length - 1];
   },
 
   components: {
@@ -77,6 +113,13 @@ export const muiTheme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: radii.pill,
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          backgroundImage: 'none',
         },
       },
     },

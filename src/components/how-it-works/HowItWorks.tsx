@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import Typography from '@mui/material/Typography';
-import { badges, motion as motionTokens } from '../../design/tokens';
+import { motion as motionTokens } from '../../design/tokens';
 
 const toSeconds = (msValue: string) => Number(msValue.replace('ms', '')) / 1000;
 const toBezierArray = (bezier: string) =>
@@ -38,32 +38,24 @@ const MotionTypography = motion(Typography);
 
 const steps = [
   {
-    title: 'Answer Every Call',
-    description: 'AI acknowledges instantly.',
+    title: 'Voice Intake',
+    description: 'AI answers every call instantly.',
+    guardrail: 'Voice captures intent only.',
   },
   {
-    title: 'Confirm Name & Address',
-    description: 'No dispatch without verification.',
-    badge: {
-      label: 'Confirmed',
-      styles: badges.confirmed,
-    },
+    title: 'SMS Confirmation',
+    description: 'Only text messages finalize bookings.',
+    guardrail: 'SMS locks the details.',
   },
   {
-    title: 'Secure Payment',
-    description: 'Collect before scheduling.',
-    badge: {
-      label: 'Confirmed',
-      styles: badges.confirmed,
-    },
+    title: 'Payment Authorization',
+    description: 'Jobs proceed only after payment approval.',
+    guardrail: 'No unpaid dispatches.',
   },
   {
-    title: 'Create Job',
-    description: 'Verified record created automatically.',
-  },
-  {
-    title: 'Dispatcher Sees Confirmed Data Only',
-    description: 'Only confirmed data reaches dispatch.',
+    title: 'Job Created',
+    description: 'Confirmed, paid, and ready for dispatch.',
+    guardrail: 'FSM approves every step.',
   },
 ];
 
@@ -88,35 +80,27 @@ const HowItWorks = () => {
         variants={containerVariants}
         initial="hidden"
         animate="show"
-        className="step-grid"
+        className="pipeline"
       >
-        {steps.map((step) => (
+        {steps.map((step, index) => (
           <motion.div
             key={step.title}
             variants={itemVariants}
-            className="step-card"
+            className="pipeline-step"
           >
-            <div aria-hidden="true" className="step-icon" />
-            <div className="step-text">
-              <div className="step-title">
-                {step.title}
-              </div>
-              {step.badge ? (
-                <div
-                  className="step-badge"
-                  style={{
-                    border: `1px solid ${step.badge.styles.border}`,
-                    backgroundColor: step.badge.styles.background,
-                    color: step.badge.styles.text,
-                  }}
-                >
-                  {step.badge.label}
-                </div>
-              ) : null}
-              <div className="step-description">
-                {step.description}
-              </div>
+            <div className="pipeline-step__header">
+              <div className="pipeline-step__index">{index + 1}</div>
+              <div aria-hidden="true" className="pipeline-step__icon" />
             </div>
+            <Typography variant="subtitle1" className="pipeline-step__title">
+              {step.title}
+            </Typography>
+            <Typography variant="body1" className="pipeline-step__description">
+              {step.description}
+            </Typography>
+            <Typography variant="caption" className="pipeline-step__guardrail">
+              {step.guardrail}
+            </Typography>
           </motion.div>
         ))}
       </motion.div>

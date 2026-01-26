@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import Button from '@mui/material/Button';
 import { motion as motionTokens } from '../../design/tokens';
 import HeroModel from './HeroModel';
 
@@ -34,7 +35,11 @@ const itemVariants = {
   },
 };
 
-const Hero = () => {
+type HeroProps = {
+  onTryDemo: () => void;
+};
+
+const Hero = ({ onTryDemo }: HeroProps) => {
   return (
     <section className="hero">
       <motion.div
@@ -63,6 +68,21 @@ const Hero = () => {
         <motion.p variants={itemVariants} className="hero__subtitle">
           Always On. <span className="hero__subtitle-accent">Always Booking.</span>
         </motion.p>
+
+        <motion.div variants={itemVariants} className="hero__cta">
+          <Button
+            className="hero__primary-cta"
+            disableRipple
+            type="button"
+            onClick={onTryDemo}
+            data-intent="try-demo"
+          >
+            Try Demo
+          </Button>
+          <p className="hero__cta-note">
+            We’ll call you right away from +1 216-744-8929.
+          </p>
+        </motion.div>
 
       </motion.div>
     </section>
