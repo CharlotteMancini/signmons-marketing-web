@@ -53,10 +53,6 @@ const sloTargets = [
     value: '≥ 80%',
   },
   {
-    label: 'SMS confirmation completion',
-    value: '≥ 85%',
-  },
-  {
     label: 'Jobs with unconfirmed name/address',
     value: '0',
   },

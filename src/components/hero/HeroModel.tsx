@@ -10,9 +10,9 @@ const SignmonsModel = () => {
   const gltf = useGLTF('/models/signmons3D.glb');
   const { actions, names } = useAnimations(gltf.animations, group);
   const amplitudeRef = useAudioAnalyser({ enabled: false });
-  const baseX = 0.35;
-  const baseY = -1.12;
-  const baseScale = 0.4176;
+  const baseX = 0.65;
+  const baseY = -1.6;
+  const baseScale = 0.37584;
 
   useEffect(() => {
     const firstClipName = names[0];

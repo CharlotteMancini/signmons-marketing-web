@@ -29,7 +29,7 @@ export const colors = {
 };
 
 export const typography = {
-  fontFamily: '"Space Grotesk", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
+  fontFamily: '"Poppins", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif',
   hero: {
     fontSize: 'clamp(2.25rem, 5vw, 3.25rem)',
     fontWeight: 700,

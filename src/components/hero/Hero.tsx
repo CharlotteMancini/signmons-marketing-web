@@ -38,7 +38,7 @@ const itemVariants = {
 };
 
 type HeroProps = {
-  onTryDemo: () => void;
+  onTryDemo?: () => void;
 };
 
 const Hero = ({ onTryDemo }: HeroProps) => {
@@ -72,7 +72,7 @@ const Hero = ({ onTryDemo }: HeroProps) => {
         aria-pressed={soundEnabled}
         title={soundEnabled ? 'Sound enabled' : 'Tap for sound'}
         disableRipple
-        style={{ position: 'fixed', top: '64px', right: '14px', left: 'auto' }}
+        style={{ position: 'fixed', top: '24px', right: '14px', left: 'auto' }}
       >
         <span aria-hidden="true">♪</span>
       </IconButton>
@@ -96,68 +96,94 @@ const Hero = ({ onTryDemo }: HeroProps) => {
         className="hero__content"
       >
         <motion.h1 variants={itemVariants} className="hero__title">
-          AI Customer Service Rep
-          <span className="hero__title-break">for the Trades</span>
+          The AI Front Desk
+          <span className="hero__title-break">Built for the Trades</span>
         </motion.h1>
 
-        <motion.p variants={itemVariants} className="hero__subtitle">
-          <span className="hero__subtitle-strong">Always On.</span>
-          <span className="hero__subtitle-gap" aria-hidden="true" />
-          <span className="hero__subtitle-accent">Always Booking.</span>
+        <motion.p variants={itemVariants} className="hero__lead hero__lead--intro">
+          From the first ring to the final invoice, Signmons manages customer calls, bookings,
+          and payments both beautifully and reliably.
         </motion.p>
 
-        <motion.ul
+        <motion.div
           variants={itemVariants}
-          className="hero__checklist"
+          className="hero__glass-grid"
           role="list"
-          aria-label="AI customer service rep capabilities"
+          aria-label="AI front desk capabilities"
         >
-          <li className="hero__checklist-item">
-            <span className="hero__checklist-icon" aria-hidden="true" />
-            Answers Calls
-          </li>
-          <li className="hero__checklist-item">
-            <span className="hero__checklist-icon" aria-hidden="true" />
-            Gathers Info
-          </li>
-          <li className="hero__checklist-item">
-            <span className="hero__checklist-icon" aria-hidden="true" />
-            Processes Payments
-          </li>
-          <li className="hero__checklist-item">
-            <span className="hero__checklist-icon" aria-hidden="true" />
-            Books Appts
-          </li>
-          <li className="hero__checklist-item">
-            <span className="hero__checklist-icon" aria-hidden="true" />
-            Notifies Tech
-          </li>
-          <li className="hero__checklist-item">
-            <span className="hero__checklist-icon" aria-hidden="true" />
-            Tracks Activity
-          </li>
-        </motion.ul>
+          <div className="hero__glass-cell" role="listitem">
+            <span className="hero__glass-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="hero__glass-svg">
+                <path d="M7 4h3l1 4-2 1c1.1 2.1 2.9 3.9 5 5l1-2 4 1v3a2 2 0 0 1-2 2C9.3 20 4 14.7 4 7a3 3 0 0 1 3-3z" />
+              </svg>
+            </span>
+            <span className="hero__glass-label">24/7 Call Answering</span>
+          </div>
+          <div className="hero__glass-cell" role="listitem">
+            <span className="hero__glass-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="hero__glass-svg">
+                <rect x="4" y="6" width="16" height="14" rx="2" />
+                <path d="M8 3v4M16 3v4M4 10h16" />
+              </svg>
+            </span>
+            <span className="hero__glass-label">Automated Scheduling</span>
+          </div>
+          <div className="hero__glass-cell" role="listitem">
+            <span className="hero__glass-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="hero__glass-svg">
+                <rect x="6" y="5" width="12" height="16" rx="2" />
+                <path d="M9 5V3h6v2M9 11h6M9 15h4" />
+              </svg>
+            </span>
+            <span className="hero__glass-label">Smart Lead Intake</span>
+          </div>
+          <div className="hero__glass-cell" role="listitem">
+            <span className="hero__glass-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="hero__glass-svg">
+                <path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z" />
+                <path d="M12 9v6M10 13h4" />
+              </svg>
+            </span>
+            <span className="hero__glass-label">Secure Payments</span>
+          </div>
+          <div className="hero__glass-cell" role="listitem">
+            <span className="hero__glass-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="hero__glass-svg">
+                <path d="M6 10a6 6 0 0 1 12 0v4l2 2H4l2-2v-4z" />
+                <path d="M10 18a2 2 0 0 0 4 0" />
+              </svg>
+            </span>
+            <span className="hero__glass-label">Real-Time Notifications</span>
+          </div>
+          <div className="hero__glass-cell" role="listitem">
+            <span className="hero__glass-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" className="hero__glass-svg">
+                <path d="M5 19V9M12 19V5M19 19v-8M4 19h16" />
+              </svg>
+            </span>
+            <span className="hero__glass-label">Activity Intelligence</span>
+          </div>
+        </motion.div>
+
+        <motion.div variants={itemVariants} className="hero__cta">
+          <Button
+            className="hero__primary-cta"
+            disableRipple
+            type="button"
+            onClick={onTryDemo}
+            data-intent="try-demo"
+          >
+            Experience the Demo
+          </Button>
+          <div className="hero__trust hero__trust--footer">
+            <span className="hero__trust-text">
+              Trusted by HVAC, Plumbing
+              <span className="hero__trust-break">Electrical &amp; Construction</span>
+            </span>
+          </div>
+        </motion.div>
       </motion.div>
 
-      <motion.div
-        variants={itemVariants}
-        initial="hidden"
-        animate="show"
-        className="hero__cta hero__cta--bottom"
-      >
-        <Button
-          className="hero__primary-cta"
-          disableRipple
-          type="button"
-          onClick={onTryDemo}
-          data-intent="try-demo"
-        >
-          Try A Demo
-        </Button>
-        <p className="hero__cta-note">
-          We’ll call you right away from +1 216-744-8929.
-        </p>
-      </motion.div>
     </section>
   );
 };
