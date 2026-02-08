@@ -39,8 +39,8 @@ const MotionTypography = motion(Typography);
 const steps = [
   {
     title: 'Voice Intake',
-    description: 'AI answers every call instantly.',
-    guardrail: 'Voice captures intent only.',
+    description: 'Signmons answers calls, texts, and web requests!',
+    guardrail: '',
   },
   {
     title: 'SMS Confirmation',

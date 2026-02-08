@@ -80,6 +80,7 @@ const MarketingLayout = ({ children, headerSlot, footerSlot }: MarketingLayoutPr
         '--border-halo': borders.halo,
       } as CSSProperties}
     >
+      <div className="marketing-bg-overlay" aria-hidden="true" />
       <div className="star-orbs" aria-hidden="true">
         <span className="star-orb star-orb--one" />
         <span className="star-orb star-orb--two" />

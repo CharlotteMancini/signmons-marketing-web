@@ -72,7 +72,7 @@ const Hero = ({ onTryDemo }: HeroProps) => {
         aria-pressed={soundEnabled}
         title={soundEnabled ? 'Sound enabled' : 'Tap for sound'}
         disableRipple
-        style={{ position: 'fixed', top: '24px', right: '14px', left: 'auto' }}
+        style={{ position: 'fixed', top: '30px', right: '14px', left: 'auto' }}
       >
         <span aria-hidden="true">♪</span>
       </IconButton>
@@ -96,13 +96,12 @@ const Hero = ({ onTryDemo }: HeroProps) => {
         className="hero__content"
       >
         <motion.h1 variants={itemVariants} className="hero__title">
-          The AI Front Desk
-          <span className="hero__title-break">Built for the Trades</span>
+          Signmons Books Jobs
+          <span className="hero__title-break">While You Work</span>
         </motion.h1>
 
         <motion.p variants={itemVariants} className="hero__lead hero__lead--intro">
-          From the first ring to the final invoice, Signmons manages customer calls, bookings,
-          and payments both beautifully and reliably.
+          We answer every call, filter out time-wasters, book qualified jobs, and collect payment.
         </motion.p>
 
         <motion.div
@@ -117,7 +116,10 @@ const Hero = ({ onTryDemo }: HeroProps) => {
                 <path d="M7 4h3l1 4-2 1c1.1 2.1 2.9 3.9 5 5l1-2 4 1v3a2 2 0 0 1-2 2C9.3 20 4 14.7 4 7a3 3 0 0 1 3-3z" />
               </svg>
             </span>
-            <span className="hero__glass-label">24/7 Call Answering</span>
+            <span className="hero__glass-label">
+              <span className="hero__glass-label-line">24/7 Call</span>
+              <span className="hero__glass-label-line">Answering</span>
+            </span>
           </div>
           <div className="hero__glass-cell" role="listitem">
             <span className="hero__glass-icon" aria-hidden="true">
@@ -126,7 +128,10 @@ const Hero = ({ onTryDemo }: HeroProps) => {
                 <path d="M8 3v4M16 3v4M4 10h16" />
               </svg>
             </span>
-            <span className="hero__glass-label">Automated Scheduling</span>
+            <span className="hero__glass-label">
+              <span className="hero__glass-label-line">Qualified</span>
+              <span className="hero__glass-label-line">Jobs</span>
+            </span>
           </div>
           <div className="hero__glass-cell" role="listitem">
             <span className="hero__glass-icon" aria-hidden="true">
@@ -135,7 +140,10 @@ const Hero = ({ onTryDemo }: HeroProps) => {
                 <path d="M9 5V3h6v2M9 11h6M9 15h4" />
               </svg>
             </span>
-            <span className="hero__glass-label">Smart Lead Intake</span>
+            <span className="hero__glass-label">
+              <span className="hero__glass-label-line">Schedules</span>
+              <span className="hero__glass-label-line">Appts</span>
+            </span>
           </div>
           <div className="hero__glass-cell" role="listitem">
             <span className="hero__glass-icon" aria-hidden="true">
@@ -144,7 +152,10 @@ const Hero = ({ onTryDemo }: HeroProps) => {
                 <path d="M12 9v6M10 13h4" />
               </svg>
             </span>
-            <span className="hero__glass-label">Secure Payments</span>
+            <span className="hero__glass-label">
+              <span className="hero__glass-label-line">Get Paid</span>
+              <span className="hero__glass-label-line">Upfront</span>
+            </span>
           </div>
           <div className="hero__glass-cell" role="listitem">
             <span className="hero__glass-icon" aria-hidden="true">
@@ -153,7 +164,10 @@ const Hero = ({ onTryDemo }: HeroProps) => {
                 <path d="M10 18a2 2 0 0 0 4 0" />
               </svg>
             </span>
-            <span className="hero__glass-label">Real-Time Notifications</span>
+            <span className="hero__glass-label">
+              <span className="hero__glass-label-line">Instant</span>
+              <span className="hero__glass-label-line">Updates</span>
+            </span>
           </div>
           <div className="hero__glass-cell" role="listitem">
             <span className="hero__glass-icon" aria-hidden="true">
@@ -161,7 +175,10 @@ const Hero = ({ onTryDemo }: HeroProps) => {
                 <path d="M5 19V9M12 19V5M19 19v-8M4 19h16" />
               </svg>
             </span>
-            <span className="hero__glass-label">Activity Intelligence</span>
+            <span className="hero__glass-label">
+              <span className="hero__glass-label-line">Revenue</span>
+              <span className="hero__glass-label-line">Insights</span>
+            </span>
           </div>
         </motion.div>
 
@@ -170,7 +187,10 @@ const Hero = ({ onTryDemo }: HeroProps) => {
             className="hero__primary-cta"
             disableRipple
             type="button"
-            onClick={onTryDemo}
+            onClick={() => {
+              console.info('[intent]', 'try-demo-click');
+              onTryDemo?.();
+            }}
             data-intent="try-demo"
           >
             Experience the Demo
