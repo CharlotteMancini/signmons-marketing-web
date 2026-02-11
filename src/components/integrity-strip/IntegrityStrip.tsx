@@ -1,39 +1,36 @@
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Typography from '@mui/material/Typography';
-
-const demoVideo = {
-  title: 'LET AI WORK FOR YOU!',
-  src: '/media/signmons-demo-vimeo.mp4',
-  poster: '/media/signmons-demo-vimeo-poster.png',
-};
-
-const localVideo = {
-  title: 'NO LOST CALLS = MORE MONEY!',
-  src: '/media/signmons-demo-local.mp4',
-  poster: '/media/signmons-demo-local-poster-v3.png',
-};
-
-const integrityCards = [
-  {
-    title: 'Paid Before Dispatch',
-    description: 'Jobs start only after payment approval.',
-    tone: 'payment',
-  },
-  {
-    title: 'Isolated Customer Data',
-    description: 'No shared data between accounts.',
-    tone: 'tenant',
-  },
-];
+import { homePageCopy } from '../../data';
+import type { MarketingVideoAsset } from '../../types';
+import GlassCard from '../ui/GlassCard';
 
 const IntegrityStrip = () => {
+  const { integrity } = homePageCopy;
+  const localVideo = integrity.videos.find((video) => video.id === 'local-demo');
+  const vimeoVideo = integrity.videos.find((video) => video.id === 'vimeo-demo');
+  const [primaryCard, secondaryCard] = integrity.cards;
+
+  if (!localVideo || !vimeoVideo || !primaryCard || !secondaryCard) {
+    throw new Error('Integrity section data is incomplete.');
+  }
+
   const sectionRef = useRef<HTMLElement | null>(null);
   const videoCardRef = useRef<HTMLDivElement | null>(null);
   const localPlayerRef = useRef<HTMLVideoElement | null>(null);
-  const [activeVideo, setActiveVideo] = useState<'local' | 'vimeo' | null>(null);
+  const [activeVideo, setActiveVideo] = useState<MarketingVideoAsset['id'] | null>(null);
   const [localNeedsTap, setLocalNeedsTap] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+
+  const openVideo = (video: MarketingVideoAsset['id']) => {
+    setActiveVideo(video);
+    setLocalNeedsTap(video === 'local-demo');
+  };
+
+  const closeVideo = () => {
+    setActiveVideo(null);
+    setLocalNeedsTap(false);
+  };
 
   useEffect(() => {
     const target = sectionRef.current;
@@ -59,6 +56,7 @@ const IntegrityStrip = () => {
   useEffect(() => {
     const target = sectionRef.current;
     const root = document.querySelector('.marketing-root');
+    const body = document.body;
 
     if (!target || !root) {
       return;
@@ -67,22 +65,24 @@ const IntegrityStrip = () => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         root.classList.toggle('marketing-root--dark', entry.isIntersecting);
+        root.classList.toggle('marketing-root--deep-space', entry.isIntersecting);
+        body.classList.toggle('marketing-body--deep-space', entry.isIntersecting);
       },
       { threshold: 0, rootMargin: '0px 0px -50% 0px' }
     );
 
     observer.observe(target);
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      root.classList.remove('marketing-root--dark');
+      root.classList.remove('marketing-root--deep-space');
+      body.classList.remove('marketing-body--deep-space');
+    };
   }, []);
 
   useEffect(() => {
-    if (activeVideo !== 'local') {
-      setLocalNeedsTap(false);
-      return;
-    }
-
-    setLocalNeedsTap(true);
+    if (activeVideo !== 'local-demo') return;
 
     const frame = requestAnimationFrame(() => {
       const player = localPlayerRef.current;
@@ -109,12 +109,12 @@ const IntegrityStrip = () => {
           className="integrity-card integrity-card--video"
           role="button"
           tabIndex={0}
-          aria-label="Play Signmons demo video"
-          onClick={() => setActiveVideo('local')}
+          aria-label={localVideo.ariaLabel}
+          onClick={() => openVideo('local-demo')}
           onKeyDown={(event) => {
             if (event.key === 'Enter' || event.key === ' ') {
               event.preventDefault();
-              setActiveVideo('local');
+              openVideo('local-demo');
             }
           }}
         >
@@ -144,46 +144,43 @@ const IntegrityStrip = () => {
           </div>
         </div>
 
-        <div className="integrity-card integrity-card--text">
-          <div
-            className={`integrity-card__icon integrity-card__icon--${integrityCards[0].tone}`}
-            aria-hidden="true"
-          />
+        <GlassCard variant="integrity" className="integrity-card integrity-card--text">
+          <div className={`integrity-card__icon integrity-card__icon--${primaryCard.tone}`} aria-hidden="true" />
           <Typography variant="subtitle1" className="integrity-card__title">
-            {integrityCards[0].title}
+            {primaryCard.title}
           </Typography>
           <Typography variant="body1" className="integrity-card__description">
-            {integrityCards[0].description}
+            {primaryCard.description}
           </Typography>
-        </div>
+        </GlassCard>
 
         <div
           className="integrity-card integrity-card--video"
           role="button"
           tabIndex={0}
-          aria-label="Play Signmons demo video"
-          onClick={() => setActiveVideo('vimeo')}
+          aria-label={vimeoVideo.ariaLabel}
+          onClick={() => openVideo('vimeo-demo')}
           onKeyDown={(event) => {
             if (event.key === 'Enter' || event.key === ' ') {
               event.preventDefault();
-              setActiveVideo('vimeo');
+              openVideo('vimeo-demo');
             }
           }}
         >
           <div className="integrity-card__video">
-            <div className="integrity-card__video-title">{demoVideo.title}</div>
+            <div className="integrity-card__video-title">{vimeoVideo.title}</div>
             {isVisible ? (
               <video
-                src={demoVideo.src}
+                src={vimeoVideo.src}
                 muted
                 playsInline
                 preload="metadata"
-                poster={demoVideo.poster}
+                poster={vimeoVideo.poster}
                 aria-hidden="true"
               />
             ) : (
               <img
-                src={demoVideo.poster}
+                src={vimeoVideo.poster}
                 alt=""
                 aria-hidden="true"
                 loading="lazy"
@@ -196,25 +193,22 @@ const IntegrityStrip = () => {
           </div>
         </div>
 
-        <div className="integrity-card integrity-card--text">
-          <div
-            className={`integrity-card__icon integrity-card__icon--${integrityCards[1].tone}`}
-            aria-hidden="true"
-          />
+        <GlassCard variant="integrity" className="integrity-card integrity-card--text">
+          <div className={`integrity-card__icon integrity-card__icon--${secondaryCard.tone}`} aria-hidden="true" />
           <Typography variant="subtitle1" className="integrity-card__title">
-            {integrityCards[1].title}
+            {secondaryCard.title}
           </Typography>
           <Typography variant="body1" className="integrity-card__description">
-            {integrityCards[1].description}
+            {secondaryCard.description}
           </Typography>
-        </div>
+        </GlassCard>
       </div>
 
       {activeVideo && typeof document !== 'undefined'
         ? createPortal(
             <div
               className="integrity-video-overlay"
-              onClick={() => setActiveVideo(null)}
+              onClick={closeVideo}
               role="dialog"
               aria-modal="true"
             >
@@ -223,17 +217,17 @@ const IntegrityStrip = () => {
                 onClick={(event) => event.stopPropagation()}
               >
                 <div className="integrity-video-title">
-                  {activeVideo === 'local' ? localVideo.title : demoVideo.title}
+                  {activeVideo === 'local-demo' ? localVideo.title : vimeoVideo.title}
                 </div>
                 <button
                   type="button"
                   className="integrity-video-close"
-                  onClick={() => setActiveVideo(null)}
+                  onClick={closeVideo}
                   aria-label="Close video"
                 >
                   ×
                 </button>
-                {activeVideo === 'local' ? (
+                {activeVideo === 'local-demo' ? (
                   <div className="integrity-video-player">
                     <video
                       src={localVideo.src}
@@ -266,7 +260,7 @@ const IntegrityStrip = () => {
                   </div>
                 ) : (
                   <video
-                    src={demoVideo.src}
+                    src={vimeoVideo.src}
                     autoPlay
                     playsInline
                     loop

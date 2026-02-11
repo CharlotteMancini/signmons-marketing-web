@@ -65,7 +65,7 @@ const useAudioAnalyser = (options: AudioAnalyserOptions = {}) => {
         };
 
         tick();
-      } catch (error) {
+      } catch {
         amplitudeRef.current = 0;
       }
     };

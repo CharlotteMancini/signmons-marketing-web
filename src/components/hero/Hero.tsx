@@ -1,8 +1,11 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import { homePageCopy } from '../../data';
 import { motion as motionTokens } from '../../design/tokens';
+import type { HeroCapabilityIconKey } from '../../types';
+import { getCtaHref, triggerCtaAction } from '../../utils/cta';
 import HeroModel from './HeroModel';
 
 const toSeconds = (msValue: string) => Number(msValue.replace('ms', '')) / 1000;
@@ -37,11 +40,51 @@ const itemVariants = {
   },
 };
 
-type HeroProps = {
-  onTryDemo?: () => void;
+const capabilityIcons: Record<HeroCapabilityIconKey, ReactNode> = {
+  call: (
+    <svg viewBox="0 0 24 24" className="hero__glass-svg">
+      <path d="M7 4h3l1 4-2 1c1.1 2.1 2.9 3.9 5 5l1-2 4 1v3a2 2 0 0 1-2 2C9.3 20 4 14.7 4 7a3 3 0 0 1 3-3z" />
+    </svg>
+  ),
+  jobs: (
+    <svg viewBox="0 0 24 24" className="hero__glass-svg">
+      <rect x="4" y="6" width="16" height="14" rx="2" />
+      <path d="M8 3v4M16 3v4M4 10h16" />
+    </svg>
+  ),
+  schedule: (
+    <svg viewBox="0 0 24 24" className="hero__glass-svg">
+      <rect x="6" y="5" width="12" height="16" rx="2" />
+      <path d="M9 5V3h6v2M9 11h6M9 15h4" />
+    </svg>
+  ),
+  payment: (
+    <svg viewBox="0 0 24 24" className="hero__glass-svg">
+      <path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z" />
+      <path d="M12 9v6M10 13h4" />
+    </svg>
+  ),
+  updates: (
+    <svg viewBox="0 0 24 24" className="hero__glass-svg">
+      <path d="M6 10a6 6 0 0 1 12 0v4l2 2H4l2-2v-4z" />
+      <path d="M10 18a2 2 0 0 0 4 0" />
+    </svg>
+  ),
+  insights: (
+    <svg viewBox="0 0 24 24" className="hero__glass-svg">
+      <path d="M5 19V9M12 19V5M19 19v-8M4 19h16" />
+    </svg>
+  ),
 };
 
-const Hero = ({ onTryDemo }: HeroProps) => {
+type HeroProps = {
+  onTryDemo?: () => void;
+  onEarlyAccess?: () => void;
+};
+
+const Hero = ({ onTryDemo, onEarlyAccess }: HeroProps) => {
+  const { hero } = homePageCopy;
+  const primaryCtaHref = getCtaHref(hero.primaryCta.action);
   const [soundEnabled, setSoundEnabled] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -60,6 +103,11 @@ const Hero = ({ onTryDemo }: HeroProps) => {
       }
       return next;
     });
+  };
+
+  const handlePrimaryCtaClick = () => {
+    console.info('[intent]', `${hero.primaryCta.intent}-click`);
+    triggerCtaAction(hero.primaryCta, { onTryDemo, onEarlyAccess });
   };
 
   return (
@@ -96,12 +144,14 @@ const Hero = ({ onTryDemo }: HeroProps) => {
         className="hero__content"
       >
         <motion.h1 variants={itemVariants} className="hero__title">
-          Signmons Books Jobs
-          <span className="hero__title-break">While You Work</span>
+          {hero.title}
+          {hero.titleBreak ? (
+            <span className="hero__title-break">{hero.titleBreak}</span>
+          ) : null}
         </motion.h1>
 
         <motion.p variants={itemVariants} className="hero__lead hero__lead--intro">
-          We answer every call, filter out time-wasters, book qualified jobs, and collect payment.
+          {hero.lead}
         </motion.p>
 
         <motion.div
@@ -110,95 +160,36 @@ const Hero = ({ onTryDemo }: HeroProps) => {
           role="list"
           aria-label="AI front desk capabilities"
         >
-          <div className="hero__glass-cell" role="listitem">
-            <span className="hero__glass-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" className="hero__glass-svg">
-                <path d="M7 4h3l1 4-2 1c1.1 2.1 2.9 3.9 5 5l1-2 4 1v3a2 2 0 0 1-2 2C9.3 20 4 14.7 4 7a3 3 0 0 1 3-3z" />
-              </svg>
-            </span>
-            <span className="hero__glass-label">
-              <span className="hero__glass-label-line">24/7 Call</span>
-              <span className="hero__glass-label-line">Answering</span>
-            </span>
-          </div>
-          <div className="hero__glass-cell" role="listitem">
-            <span className="hero__glass-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" className="hero__glass-svg">
-                <rect x="4" y="6" width="16" height="14" rx="2" />
-                <path d="M8 3v4M16 3v4M4 10h16" />
-              </svg>
-            </span>
-            <span className="hero__glass-label">
-              <span className="hero__glass-label-line">Qualified</span>
-              <span className="hero__glass-label-line">Jobs</span>
-            </span>
-          </div>
-          <div className="hero__glass-cell" role="listitem">
-            <span className="hero__glass-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" className="hero__glass-svg">
-                <rect x="6" y="5" width="12" height="16" rx="2" />
-                <path d="M9 5V3h6v2M9 11h6M9 15h4" />
-              </svg>
-            </span>
-            <span className="hero__glass-label">
-              <span className="hero__glass-label-line">Schedules</span>
-              <span className="hero__glass-label-line">Appts</span>
-            </span>
-          </div>
-          <div className="hero__glass-cell" role="listitem">
-            <span className="hero__glass-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" className="hero__glass-svg">
-                <path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6l7-3z" />
-                <path d="M12 9v6M10 13h4" />
-              </svg>
-            </span>
-            <span className="hero__glass-label">
-              <span className="hero__glass-label-line">Get Paid</span>
-              <span className="hero__glass-label-line">Upfront</span>
-            </span>
-          </div>
-          <div className="hero__glass-cell" role="listitem">
-            <span className="hero__glass-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" className="hero__glass-svg">
-                <path d="M6 10a6 6 0 0 1 12 0v4l2 2H4l2-2v-4z" />
-                <path d="M10 18a2 2 0 0 0 4 0" />
-              </svg>
-            </span>
-            <span className="hero__glass-label">
-              <span className="hero__glass-label-line">Instant</span>
-              <span className="hero__glass-label-line">Updates</span>
-            </span>
-          </div>
-          <div className="hero__glass-cell" role="listitem">
-            <span className="hero__glass-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" className="hero__glass-svg">
-                <path d="M5 19V9M12 19V5M19 19v-8M4 19h16" />
-              </svg>
-            </span>
-            <span className="hero__glass-label">
-              <span className="hero__glass-label-line">Revenue</span>
-              <span className="hero__glass-label-line">Insights</span>
-            </span>
-          </div>
+          {hero.capabilities.map((capability) => (
+            <div key={capability.id} className="hero__glass-cell" role="listitem">
+              <span className="hero__glass-icon" aria-hidden="true">
+                {capabilityIcons[capability.iconKey]}
+              </span>
+              <span className="hero__glass-label">
+                <span className="hero__glass-label-line">{capability.lineOne}</span>
+                <span className="hero__glass-label-line">{capability.lineTwo}</span>
+              </span>
+            </div>
+          ))}
         </motion.div>
 
         <motion.div variants={itemVariants} className="hero__cta">
           <Button
             className="hero__primary-cta"
             disableRipple
-            type="button"
-            onClick={() => {
-              console.info('[intent]', 'try-demo-click');
-              onTryDemo?.();
-            }}
-            data-intent="try-demo"
+            type={primaryCtaHref ? undefined : 'button'}
+            href={primaryCtaHref}
+            onClick={handlePrimaryCtaClick}
+            data-intent={hero.primaryCta.intent}
           >
-            Experience the Demo
+            {hero.primaryCta.label}
           </Button>
           <div className="hero__trust hero__trust--footer">
             <span className="hero__trust-text">
-              Trusted by HVAC, Plumbing
-              <span className="hero__trust-break">Electrical &amp; Construction</span>
+              {hero.trustText}
+              {hero.trustTextBreak ? (
+                <span className="hero__trust-break">{hero.trustTextBreak}</span>
+              ) : null}
             </span>
           </div>
         </motion.div>

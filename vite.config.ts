@@ -7,6 +7,6 @@ export default defineConfig({
   server: {
     port: 5173,
     strictPort: true,
-    allowedHosts: ['unestranged-jocularly-leda.ngrok-free.dev'],
+    allowedHosts: true,
   },
 })

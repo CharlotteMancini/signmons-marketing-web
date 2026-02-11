@@ -8,18 +8,15 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
+import { tryDemoModalContract } from '../../data';
 
 type TryDemoModalProps = {
   open: boolean;
   onClose: () => void;
 };
 
-const TRY_DEMO_ENDPOINT = 'https://f2c1c2d7f64e.ngrok-free.app/api/marketing/try-demo';
-const CONSENT_TEXT_VERSION = 'try-demo-v1';
-const DEMO_SCENARIO = 'hvac';
-
 const getTimeZone = () =>
-  Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/New_York';
+  Intl.DateTimeFormat().resolvedOptions().timeZone || tryDemoModalContract.api.fallbackTimeZone;
 
 const getUtmParams = () => {
   if (typeof window === 'undefined') return undefined;
@@ -44,14 +41,23 @@ const normalizePhone = (value: string) => {
   return trimmed;
 };
 
+const stripControlChars = (value: string) =>
+  Array.from(value)
+    .filter((char) => {
+      const code = char.charCodeAt(0);
+      return code >= 32 && code !== 127;
+    })
+    .join('');
+
 const sanitizeText = (value: string) =>
-  value.replace(/[\u0000-\u001F\u007F]/g, '').trim();
+  stripControlChars(value).trim();
 
 const normalizeEmail = (value: string) => sanitizeText(value).toLowerCase();
 
 const isValidE164 = (value: string) => /^\+[1-9]\d{9,14}$/.test(value);
 
 const TryDemoModal = ({ open, onClose }: TryDemoModalProps) => {
+  const { api, copy } = tryDemoModalContract;
   const [phone, setPhone] = useState('');
   const [name, setName] = useState('');
   const [company, setCompany] = useState('');
@@ -79,11 +85,11 @@ const TryDemoModal = ({ open, onClose }: TryDemoModalProps) => {
     event.preventDefault();
     const normalizedPhone = normalizePhone(phone);
     if (!isValidE164(normalizedPhone)) {
-      setError('Enter a valid phone number (10 digits or +E.164).');
+      setError(copy.invalidPhoneError);
       return;
     }
     if (!consent) {
-      setError('Consent is required to request a demo call.');
+      setError(copy.consentRequiredError);
       return;
     }
 
@@ -93,9 +99,9 @@ const TryDemoModal = ({ open, onClose }: TryDemoModalProps) => {
     const payload: Record<string, unknown> = {
       phone: normalizedPhone,
       consentToAutoCall: true,
-      consentTextVersion: CONSENT_TEXT_VERSION,
-      demoScenario: DEMO_SCENARIO,
-      callMode: 'immediate',
+      consentTextVersion: api.consentTextVersion,
+      demoScenario: api.demoScenario,
+      callMode: api.callMode,
       timezone: getTimeZone(),
     };
 
@@ -110,7 +116,7 @@ const TryDemoModal = ({ open, onClose }: TryDemoModalProps) => {
     if (typeof window !== 'undefined') payload.referrerUrl = window.location.href;
 
     try {
-      const response = await fetch(TRY_DEMO_ENDPOINT, {
+      const response = await fetch(api.endpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -123,8 +129,8 @@ const TryDemoModal = ({ open, onClose }: TryDemoModalProps) => {
       }
 
       setSuccess(true);
-    } catch (err) {
-      setError('Something went wrong. Please try again.');
+    } catch {
+      setError(copy.requestFailedError);
     } finally {
       setSubmitting(false);
     }
@@ -132,43 +138,43 @@ const TryDemoModal = ({ open, onClose }: TryDemoModalProps) => {
 
   return (
       <Dialog open={open} onClose={handleClose} maxWidth="xs" fullWidth>
-        <DialogTitle>Try the AI CSR</DialogTitle>
+        <DialogTitle>{copy.dialogTitle}</DialogTitle>
         <DialogContent>
           {success ? (
           <Stack spacing={1.5} sx={{ paddingTop: 1 }}>
-            <Typography variant="body1">Calling you now — please answer your phone.</Typography>
+            <Typography variant="body1">{copy.successTitle}</Typography>
             <Typography variant="caption">
-              Most demos connect in under 30 seconds.
+              {copy.successCaption}
             </Typography>
             <Button onClick={handleClose} className="hero__primary-cta" disableRipple>
-              Close
+              {copy.closeLabel}
             </Button>
           </Stack>
         ) : (
             <form className="try-demo-form" onSubmit={handleSubmit} data-intent="try-demo-form">
               <Stack spacing={2.5} sx={{ paddingTop: 1 }}>
               <TextField
-                label="Phone (E.164)"
-                placeholder="+12165551234"
+                label={copy.phoneLabel}
+                placeholder={copy.phonePlaceholder}
                 value={phone}
                 onChange={(event) => setPhone(event.target.value)}
                 required
                 fullWidth
               />
               <TextField
-                label="First name (optional)"
+                label={copy.nameLabel}
                 value={name}
                 onChange={(event) => setName(event.target.value)}
                 fullWidth
               />
               <TextField
-                label="Company (optional)"
+                label={copy.companyLabel}
                 value={company}
                 onChange={(event) => setCompany(event.target.value)}
                 fullWidth
               />
               <TextField
-                label="Email (optional)"
+                label={copy.emailLabel}
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
@@ -182,7 +188,7 @@ const TryDemoModal = ({ open, onClose }: TryDemoModalProps) => {
                     required
                   />
                 }
-                label="I agree to receive an automated call/text for a demo."
+                label={copy.consentLabel}
               />
               {error ? (
                 <Typography variant="caption" color="error">
@@ -195,7 +201,7 @@ const TryDemoModal = ({ open, onClose }: TryDemoModalProps) => {
                 type="submit"
                 disabled={submitting}
               >
-                {submitting ? 'Submitting…' : 'Try Demo'}
+                {submitting ? copy.submittingLabel : copy.submitLabel}
               </Button>
             </Stack>
           </form>

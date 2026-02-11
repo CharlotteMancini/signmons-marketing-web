@@ -82,10 +82,8 @@ const MarketingLayout = ({ children, headerSlot, footerSlot }: MarketingLayoutPr
     >
       <div className="marketing-bg-overlay" aria-hidden="true" />
       <div className="star-orbs" aria-hidden="true">
-        <span className="star-orb star-orb--one" />
-        <span className="star-orb star-orb--two" />
-        <span className="star-orb star-orb--three" />
-        <span className="star-shape star-shape--one" />
+        <span className="shooting-star shooting-star--one" />
+        <span className="shooting-star shooting-star--two" />
       </div>
       {headerSlot ? <header className="marketing-header">{headerSlot}</header> : null}
       <div className="marketing-shell">

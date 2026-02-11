@@ -1,18 +1,21 @@
 import { useState } from 'react';
 import Hero from '../components/hero/Hero';
 import MarketingHeader from '../components/header/MarketingHeader';
-import IntegrityStrip from '../components/integrity-strip/IntegrityStrip';
 import HowItWorks from '../components/how-it-works/HowItWorks';
-import WhyOwnersTrust from '../components/why-owners-trust/WhyOwnersTrust';
+import TrustPlaneSections from '../components/trust-plane/TrustPlaneSections';
 import MarketingLayout from '../layouts/MarketingLayout';
 import { spacing } from '../design/tokens';
 import TryDemoModal from '../components/try-demo/TryDemoModal';
+import EarlyAccessModal from '../components/early-access/EarlyAccessModal';
 
 const Home = () => {
   const [tryDemoOpen, setTryDemoOpen] = useState(false);
+  const [earlyAccessOpen, setEarlyAccessOpen] = useState(false);
 
   return (
-    <MarketingLayout headerSlot={<MarketingHeader />}>
+    <MarketingLayout
+      headerSlot={<MarketingHeader onEarlyAccess={() => setEarlyAccessOpen(true)} />}
+    >
       <main
         style={{
           display: 'flex',
@@ -22,15 +25,17 @@ const Home = () => {
       >
         <Hero
           onTryDemo={() => {
-            console.info('[intent]', 'try-demo-click');
             setTryDemoOpen(true);
           }}
         />
-        <IntegrityStrip />
         <HowItWorks />
-        <WhyOwnersTrust />
+        <TrustPlaneSections />
       </main>
       <TryDemoModal open={tryDemoOpen} onClose={() => setTryDemoOpen(false)} />
+      <EarlyAccessModal
+        open={earlyAccessOpen}
+        onClose={() => setEarlyAccessOpen(false)}
+      />
     </MarketingLayout>
   );
 };
